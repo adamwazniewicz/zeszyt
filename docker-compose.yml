@@ -1,0 +1,69 @@
+name: zeszyt
+
+services:
+  zeszyt:
+    build: .
+    image: zeszyt:latest
+    restart: unless-stopped
+    environment:
+      SESSION_SECRET: ${SESSION_SECRET:?set SESSION_SECRET in .env}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-}
+      IDU_BASE_URL: ${IDU_BASE_URL:-https://s31.idu.edu.pl}
+      IDU_USER_AGENT: ${IDU_USER_AGENT:?set IDU_USER_AGENT in .env}
+      TRUST_PROXY: "1"
+    # Only reachable through zrok. Uncomment to test on the LAN (login needs HTTPS, so it won't work there).
+    # ports:
+    #   - "8787:8787"
+
+  # zrok2 agent, self-contained setup from the official docs:
+  # https://netfoundry.io/docs/zrok/guides/docker-share/docker_public_share_guide/
+  zrok-init:
+    image: busybox
+    command: chown -Rc 2171:2171 /mnt/
+    user: root
+    volumes:
+      - zrok_env:/mnt
+
+  zrok-enable:
+    image: docker.io/openziti/zrok2
+    depends_on:
+      zrok-init:
+        condition: service_completed_successfully
+    entrypoint: zrok2-enable
+    environment:
+      HOME: /mnt
+      ZROK2_ENABLE_TOKEN: ${ZROK2_ENABLE_TOKEN:?set ZROK2_ENABLE_TOKEN in .env}
+      ZROK2_API_ENDPOINT: ${ZROK2_API_ENDPOINT:-}
+    volumes:
+      - zrok_env:/mnt
+
+  zrok-agent:
+    image: docker.io/openziti/zrok2
+    restart: unless-stopped
+    depends_on:
+      zrok-enable:
+        condition: service_completed_successfully
+      zeszyt:
+        condition: service_healthy
+    environment:
+      HOME: /mnt
+    entrypoint:
+      - bash
+      - -c
+      - rm -f /mnt/.zrok2/agent.socket && exec "$@"
+    command:
+      - --
+      - zrok2
+      - agent
+      - start
+      - --console-address
+      - 0.0.0.0
+      - --console-start-port
+      - "8888"
+      - --console-end-port
+      - "8888"
+    volumes:
+      - zrok_env:/mnt
+
+volumes:
+  zrok_env:

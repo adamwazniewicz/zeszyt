@@ -1,0 +1,20 @@
+{
+  "name": "zeszyt",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @zeszyt/server & npm run dev -w @zeszyt/web",
+    "build": "npm run build -w @zeszyt/web && npm run build -w @zeszyt/server",
+    "start": "npm run start -w @zeszyt/server",
+    "test": "npm run test -w @zeszyt/server",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "capture": "tsx --env-file-if-exists=.env scripts/capture.ts"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}

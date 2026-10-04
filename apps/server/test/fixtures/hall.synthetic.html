@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    var idu = idu || {};
+    idu.current_user = {"id":11111,"roles":["student"]};
+    idu.redirectAfterTimeout = { delay: 3600000, url: "/" };
+  </script>
+</head>
+<body>
+  <div id="school-name">Przykładowe Liceum<br/>nr 1</div>
+  <div id="account">
+    <span id="login">Witaj, Jan Testowy</span>
+    <a href="/students/22222">Twój profil</a>
+    <a href="/users/sign_out">Wyloguj</a>
+  </div>
+  <div id="content">
+    <div class="module">
+      <h3>Plan lekcji</h3>
+      <p>Tydzień od 2026-09-28</p>
+      <div class="schedule">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th><a class="fancybox callendar_event" href="/callendar_events/501">Wycieczka</a></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+            </tr>
+            <tr>
+              <th></th>
+              <th>Poniedziałek</th>
+              <th>Wtorek</th>
+              <th>Środa</th>
+              <th>Czwartek</th>
+              <th>Piątek</th>
+            </tr>
+          </thead>
+          <tr>
+            <td title="8:00 - 8:45">1. lekcja</td>
+            <td class="lesson">
+              <div class="lesson-cell">
+                <span class="subject" title="prowadzący: A. Nowak"><a href="/subjects/100">Matematyka</a></span>
+                <span class="location"><a href="/rooms/7">12</a></span>
+              </div>
+            </td>
+            <td class="lesson">
+              <div class="lesson-cell canceled">
+                <span class="subject" title="prowadzący: B. Kowalska"><a href="/subjects/101">Fizyka</a></span>
+                <span class="location"><a href="/rooms/8">.</a></span>
+                <div>Odwołana</div>
+              </div>
+            </td>
+            <td></td>
+            <td class="lesson">
+              <div class="lesson-cell">
+                <span class="subject"><a href="/subjects/102">Angielski gr. 1</a></span>
+                <span class="location"><a href="/rooms/9">21</a></span>
+              </div>
+              <div class="lesson-cell">
+                <span class="subject"><a href="/subjects/103">Angielski gr. 2</a></span>
+                <span class="location"><a href="/rooms/10">22</a></span>
+              </div>
+            </td>
+            <td></td>
+          </tr>
+          <tr>
+            <td title="08:55 - 09:40">2. lekcja</td>
+            <td class="lesson">
+              <div class="lesson-cell lateness-in-plan">
+                <span class="subject"><a href="/subjects/104">Polski</a></span>
+                <span class="location"><a href="/rooms/7">12</a></span>
+              </div>
+            </td>
+            <td></td>
+            <td class="lesson">
+              <div class="lesson-cell absence-in-plan">
+                <span class="subject"><a href="/subjects/105">Historia</a></span>
+                <span class="location"></span>
+              </div>
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

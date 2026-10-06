@@ -1,0 +1,6 @@
+---
+description: Zeszyt product and safety constraints for every session
+alwaysApply: true
+---
+
+Before editing, read `docs/LLM_HANDOFF.md` and `AGENTS.md`. This is an unofficial read-only IDU PWA. Do not copy IDU assets, do not store user data on the server, do not commit `.env` or `fixtures/raw/`, and do not turn the backend into an open proxy.
